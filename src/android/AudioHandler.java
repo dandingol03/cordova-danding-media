@@ -129,6 +129,12 @@ public class AudioHandler extends CordovaPlugin {
               this.requestPermissions();
               return true;
         }
+        else if(action.equals("checkPermissions"))
+        {
+            messageChannel=callbackContext;
+            this.checkPermissions();
+            return true;
+        }
         else if (action.equals("stopRecordingAudio")) {
             this.stopRecordingAudio(args.getString(0), true);
         }
@@ -598,6 +604,30 @@ public class AudioHandler extends CordovaPlugin {
         }
     }
 
+
+    /**
+     * this function will check all permissions we will need
+     */
+    private  void checkPermissions() throws JSONException
+    {
+        ArrayList<JSONObject> re=new ArrayList<JSONObject>();
+        int i=0;
+        for(String permission :allPermissions)
+        {
+            JSONObject ob=new JSONObject();
+            ob.put("name",permissionsName[i]);
+            if(PermissionHelper.hasPermission(this,permission))
+            {
+                ob.put("val",true);
+            }
+            else{
+                ob.put("val",false);
+            }
+            re.add(ob);
+        }
+        this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, re.toString()));
+
+    }
 
     /**
      * this function will request all permissions we will need

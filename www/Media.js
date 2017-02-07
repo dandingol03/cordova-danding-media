@@ -79,6 +79,15 @@ Media.requestPermissions=function (success,fail) {
     }, fail, "Media", "requestPermissions");
 }
 
+/**
+ *  author:danding,查看权限
+ */
+Media.checkPermissions=function (success,fail) {
+
+    exec(function(p) {
+        success(p);
+    }, fail, "Media", "checkPermissions");
+}
 
 /**
  * Start or resume playing audio file.
