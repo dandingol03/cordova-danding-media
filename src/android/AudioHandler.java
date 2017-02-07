@@ -73,6 +73,7 @@ public class AudioHandler extends CordovaPlugin {
     public static int WRITE_EXTERNAL_STORAGE = 1;
     public final int CHECK_AUTHORITIES=3;
     public final int REQUEST_ALL_PERMISSIONS=2;
+    public final int REQUEST_PERMISSION=4;
     public static final int PERMISSION_DENIED_ERROR = 20;
 
     private String recordId;
@@ -122,6 +123,13 @@ public class AudioHandler extends CordovaPlugin {
                 fileUriStr = target;
             }
             promptForRecord();
+        }
+        else if(action.equals("requestPermission"))
+        {
+            messageChannel=callbackContext;
+            String permission=args.getString(0);
+            this.requestPermission(permission);
+            return true;
         }
         else if(action.equals("requestPermissions"))
         {
@@ -572,6 +580,15 @@ public class AudioHandler extends CordovaPlugin {
                 }
                 this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, results.toString()));
                 break;
+            case REQUEST_PERMISSION:
+                int grant=grantResults[0];
+                Boolean result=false;
+                if(grant == PackageManager.PERMISSION_DENIED)
+                {}else{
+                    result=true;
+                }
+                this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, result.toString()));
+                break;
             case REQUEST_ALL_PERMISSIONS:
                        ArrayList<JSONObject> re= new ArrayList<JSONObject>();
                        int i=0;
@@ -624,10 +641,20 @@ public class AudioHandler extends CordovaPlugin {
                 ob.put("val",false);
             }
             re.add(ob);
+            i++;
         }
         this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, re.toString()));
 
     }
+
+    /**
+     * this function will request all permissions we will need
+     */
+    private void requestPermission(String permission)
+    {
+        PermissionHelper.requestPermission(this, REQUEST_PERMISSION, permission);
+    }
+
 
     /**
      * this function will request all permissions we will need

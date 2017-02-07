@@ -69,6 +69,18 @@ Media.get = function(id) {
     return mediaObjects[id];
 };
 
+
+/**
+ *  author:danding,授权请求
+ */
+Media.requestPermission=function (permission,success,fail) {
+
+    exec(function(p) {
+        success(p);
+    }, fail, "Media", "requestPermission",[permission]);
+}
+
+
 /**
  *  author:danding,授权请求
  */
