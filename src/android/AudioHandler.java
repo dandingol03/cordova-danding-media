@@ -68,6 +68,7 @@ public class AudioHandler extends CordovaPlugin {
             Manifest.permission.RECORD_AUDIO};
     public static String [] allPermissions={Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.READ_EXTERNAL_STORAGE};
+    public static  String[] permissionsName={"文件写入","使用音频","读取文件"};
     public static int RECORD_AUDIO = 0;
     public static int WRITE_EXTERNAL_STORAGE = 1;
     public final int CHECK_AUTHORITIES=3;
@@ -566,15 +567,19 @@ public class AudioHandler extends CordovaPlugin {
                 this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, results.toString()));
                 break;
             case REQUEST_ALL_PERMISSIONS:
-                       ArrayList<Boolean> re= new ArrayList<Boolean>();
+                       ArrayList<JSONObject> re= new ArrayList<JSONObject>();
+                       int i=0;
                         for(int r:grantResults)
                         {
+                            JSONObject ob=new JSONObject();
                             if(r == PackageManager.PERMISSION_DENIED)
                             {
-                                re.add(false);
+                                ob.put(permissionsName[i],false);
                             }else{
-                                re.add(true);
+                                ob.put(permissionsName[i],true);
                             }
+                            re.add(ob);
+                            i++;
                         }
                 this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, re.toString()));
                 break;
