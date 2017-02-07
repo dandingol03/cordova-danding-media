@@ -132,6 +132,7 @@ public class AudioHandler extends CordovaPlugin {
         }
         else if(action.equals("checkAuthorities"))
         {
+            messageChannel=callbackContext;
             PermissionHelper.requestPermissions(this, CHECK_AUTHORITIES, authorities);
         }
         else if(action.equals("getAudioFullPath")){
@@ -561,7 +562,7 @@ public class AudioHandler extends CordovaPlugin {
                         results.add(true);
                     }
                 }
-                this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, results.toString()));
+                this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, results.toString()));
                 break;
             case REQUEST_ALL_PERMISSIONS:
                        ArrayList<Boolean> re= new ArrayList<Boolean>();
@@ -574,8 +575,8 @@ public class AudioHandler extends CordovaPlugin {
                                 re.add(true);
                             }
                         }
-                        this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, re.toString()));
-            break;
+                this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.OK, re.toString()));
+                break;
             default:
                 for(int r:grantResults)
                 {
