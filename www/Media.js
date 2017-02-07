@@ -88,7 +88,7 @@ Media.requestPermissions=function (success,fail) {
 
     exec(function(p) {
         success(p);
-    }, fail, "Media", "requestPermissions");
+    }, fail, "Media", "requestPermissions",[]);
 }
 
 /**
@@ -98,7 +98,7 @@ Media.checkPermissions=function (success,fail) {
 
     exec(function(p) {
         success(p);
-    }, fail, "Media", "checkPermissions");
+    }, fail, "Media", "checkPermissions",[]);
 }
 
 /**
