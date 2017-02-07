@@ -572,11 +572,12 @@ public class AudioHandler extends CordovaPlugin {
                         for(int r:grantResults)
                         {
                             JSONObject ob=new JSONObject();
+                            ob.put("name",permissionsName[i]);
                             if(r == PackageManager.PERMISSION_DENIED)
                             {
-                                ob.put(permissionsName[i],false);
+                                ob.put("val",false);
                             }else{
-                                ob.put(permissionsName[i],true);
+                                ob.put("val",true);
                             }
                             re.add(ob);
                             i++;
