@@ -146,11 +146,6 @@ public class AudioHandler extends CordovaPlugin {
         else if (action.equals("resumeRecordingAudio")) {
             this.resumeRecordingAudio(args.getString(0));
         }
-        else if(action.equals("getAudioFullPath")){
-            String path=this.getAudioFullPath();
-            callbackContext.sendPluginResult(new PluginResult(status,path));
-            return true;
-        }
         else if (action.equals("startPlayingAudio")) {
             String target = args.getString(1);
             String fileUriStr;
